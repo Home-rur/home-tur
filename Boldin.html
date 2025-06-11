@@ -854,14 +854,19 @@
             // Переключение полноэкранного режима для панорамы
             // Переключение полноэкранного режима для панорамы
             function toggleFullscreen() {
-                if (!state.currentRoom) return;
-                
                 const panoramaContainer = elements.content.panoramaContainer;
                 
-                if (isElementFullscreen()) {
-                    exitFullscreen();
-                    panoramaContainer.classList.remove('fullscreen');
+                if (state.isFullscreen) {
+                    // Выход из полноэкранного режима
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    } else if (document.msExitFullscreen) {
+                        document.msExitFullscreen();
+                    }
                 } else {
+                    // Вход в полноэкранный режим
                     if (panoramaContainer.requestFullscreen) {
                         panoramaContainer.requestFullscreen();
                     } else if (panoramaContainer.webkitRequestFullscreen) {
@@ -869,9 +874,8 @@
                     } else if (panoramaContainer.msRequestFullscreen) {
                         panoramaContainer.msRequestFullscreen();
                     }
-                    panoramaContainer.classList.add('fullscreen');
                 }
-            }   
+            }
 
             // Обработчик изменения ориентации
             function handleOrientationChange() {
