@@ -852,7 +852,10 @@
             }
 
             // Переключение полноэкранного режима для панорамы
+            // Переключение полноэкранного режима для панорамы
             function toggleFullscreen() {
+                const panoramaContainer = elements.content.panoramaContainer;
+                
                 if (state.isFullscreen) {
                     // Выход из полноэкранного режима
                     if (document.exitFullscreen) {
@@ -862,19 +865,15 @@
                     } else if (document.msExitFullscreen) {
                         document.msExitFullscreen();
                     }
-                    elements.content.panoramaContainer.classList.remove('fullscreen');
-                    state.isFullscreen = false;
                 } else {
                     // Вход в полноэкранный режим
-                    if (elements.content.panoramaContainer.requestFullscreen) {
-                        elements.content.panoramaContainer.requestFullscreen();
-                    } else if (elements.content.panoramaContainer.webkitRequestFullscreen) {
-                        elements.content.panoramaContainer.webkitRequestFullscreen();
-                    } else if (elements.content.panoramaContainer.msRequestFullscreen) {
-                        elements.content.panoramaContainer.msRequestFullscreen();
+                    if (panoramaContainer.requestFullscreen) {
+                        panoramaContainer.requestFullscreen();
+                    } else if (panoramaContainer.webkitRequestFullscreen) {
+                        panoramaContainer.webkitRequestFullscreen();
+                    } else if (panoramaContainer.msRequestFullscreen) {
+                        panoramaContainer.msRequestFullscreen();
                     }
-                    elements.content.panoramaContainer.classList.add('fullscreen');
-                    state.isFullscreen = true;
                 }
             }
 
